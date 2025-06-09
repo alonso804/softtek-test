@@ -31,6 +31,13 @@ LIBSQL_DB_URI=
 LIBSQL_DB_TOKEN=
 ```
 
+**root**:
+
+```bash
+LIBSQL_DB_URI=
+LIBSQL_DB_TOKEN=
+```
+
 ### Usar versión de node
 
 ```bash
@@ -40,29 +47,23 @@ nvm use
 ### Instalar dependencias
 
 ```bash
-pnpm install --frozen-lockfile
+npm ci
 ```
 
-### Correr en desarrollo
+### Correr en desarrollo (lambdas)
 
 ```bash
-pnpm dev
+npm run local
 ```
 
-### Build al repositorio
+### Correr test (lambdas)
 
 ```bash
-pnpm build
+npm test
 ```
 
-### Correr en producción
+### Deploy en AWS (root)
 
 ```bash
-pnpm start
-```
-
-### Correr test
-
-```bash
-pnpm test
+npm run deploy
 ```
