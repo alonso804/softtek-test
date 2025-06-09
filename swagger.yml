@@ -1,0 +1,153 @@
+openapi: 3.0.0
+info:
+  description: API Softtek
+  version: "1.0.0"
+  title: API Softtek
+  
+servers:
+  - url: http://localhost:3000
+
+paths:
+  /fusionados:
+    get:
+      summary: Combina APIs
+      responses:
+        '200':
+          description: Respuesta del registro
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeResponse'
+                
+  /almacenar:
+    post:
+      summary: Guarda información personalizada
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveRequest'
+      responses:
+        '200':
+          description: Respuesta del inicio de sesión
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveResponse'
+                
+  /historial:
+    get:
+      summary: Retorna los planetas con paginado
+      parameters:
+        - name: page
+          in: query
+          description: Número de página a recuperar.
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Cantidad máxima de elementos por página.
+          required: false
+          schema:
+            type: integer
+            default: 10
+
+
+      responses:
+        '200':
+          description: Respuesta de operar una matriz
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryResponse'
+          
+components:
+  schemas:
+    MergeResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        coordinate:
+          type: object
+          properties:
+            x:
+              type: number
+            y:
+              type: number
+        population:
+          type: number
+        weather:
+          type: object
+          properties:
+            temperature:
+              type: number
+            windSpeed:
+              type: number
+    SaveRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        customParams:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+        - id
+        - customParams
+    SaveResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          
+    Planet:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        coordinate:
+          type: object
+          properties:
+            x:
+              type: number
+            y:
+              type: number
+          required:
+            - x
+            - y
+        population:
+          type: number
+        weather:
+          type: object
+          properties:
+            temperature:
+              type: number
+            windSpeed:
+              type: number
+          required:
+            - temperature
+            - windSpeed
+        customFields:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+              value:
+                type: string
+    HistoryResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Planet'
+  
+
